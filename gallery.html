@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Photo Gallery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background: #fffafc;
+      font-family: 'Dancing Script', cursive;
+      color: #a83279;
+      padding: 2rem;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .photo {
+      background: #fff0f5;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .photo:hover {
+      transform: scale(1.03);
+    }
+
+    .photo img {
+      width: 100%;
+      display: block;
+      height: auto;
+    }
+
+    .caption {
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.3rem;
+    }
+
+    .back-button {
+      display: block;
+      margin: 2rem auto;
+      padding: 10px 20px;
+      font-size: 1.2rem;
+      background: #ffcce0;
+      color: #a83279;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: 'Segoe UI', sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <h1>📸 Our Memories</h1>
+
+  <div class="gallery">
+  <div class="photo">
+    <img src="images/photo1.jpg" alt="Photo 1">
+    <div class="caption">Our beginning 💕</div>
+  </div>
+  <div class="photo">
+    <img src="images/photo2.jpg" alt="Photo 2">
+    <div class="caption">Our first selfie 📷</div>
+  </div>
+  <div class="photo">
+    <img src="images/photo3.jpg" alt="Photo 3">
+    <div class="caption">Your birthday surprise 🎂</div>
+  </div>
+  <div class="photo">
+    <img src="images/photo4.jpg" alt="Photo 4">
+    <div class="caption">Laughing together in the rain ☔</div>
+  </div>
+  <div class="photo">
+    <img src="images/photo5.jpg" alt="Photo 5">
+    <div class="caption">That cozy café date ☕</div>
+  </div>
+  <div class="photo">
+    <img src="images/photo6.jpg" alt="Photo 6">
+    <div class="caption">Forever us ❤️</div>
+  </div>
+</div>
+
+  <button class="back-button" onclick="window.location.href='index.html'">⬅ Back to Home</button>
+</body>
+</html>
