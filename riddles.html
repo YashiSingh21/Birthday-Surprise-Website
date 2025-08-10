@@ -1,0 +1,156 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Love Riddles Game</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff0f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      position: relative;
+    }
+
+    .back-home {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: #ffb6c1;
+      color: #700020;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+
+    h1 {
+      color: #e75480;
+      margin-bottom: 1rem;
+    }
+
+    .riddle-box {
+      background: #ffe6f0;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+
+    #riddle {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      width: 80%;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+
+    button {
+      margin-top: 1rem;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      background: #ffb6c1;
+      color: #700020;
+      cursor: pointer;
+    }
+
+    #result {
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="index.html" class="back-home">🔙 Back to Home</a>
+
+  <h1>💕 Love & Fun Riddle Game 💕</h1>
+  <div class="riddle-box">
+    <div id="riddle"></div>
+    <input type="text" id="answerInput" placeholder="Your answer here..." />
+    <br />
+    <button onclick="submitAnswer()">Submit</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const riddles = [
+      { q: "What did one heart say to the other on Valentine’s Day?", a: "i love you" },
+      { q: "I’m red but not a tomato, I’m sweet but not candy, I’m a symbol of love. What am I?", a: "rose" },
+      { q: "I grow the more you take from me. I’m needed for love to flourish. What am I?", a: "trust" },
+      { q: "You feel me in your chest, I beat fast when love is near. What am I?", a: "heart" },
+      { q: "What’s full of love, never empty, and gets bigger the more you give it away?", a: "heart" },
+      { q: "I am something. I can make you cry, smile, think. I come from the heart. What am I?", a: "letter" },
+      { q: "What’s a five-letter word that starts with L and you feel it deeply?", a: "love" },
+      { q: "What can be broken but never held?", a: "promise" },
+      { q: "What flutters but is not a bird, lives in your tummy when you're in love?", a: "butterflies" },
+      { q: "Hearts race, cheeks blush, and time flies. What’s happening?", a: "falling in love" }
+    ];
+
+    let current = 0;
+    let correct = 0;
+    let chances = 3;
+
+    const riddleEl = document.getElementById("riddle");
+    const inputEl = document.getElementById("answerInput");
+    const resultEl = document.getElementById("result");
+
+    function loadRiddle() {
+      if (current < riddles.length) {
+        riddleEl.textContent = `Q${current + 1}: ${riddles[current].q}`;
+        inputEl.value = "";
+        resultEl.textContent = "";
+        chances = 3;
+      } else {
+        endGame();
+      }
+    }
+
+    function submitAnswer() {
+      const userAnswer = inputEl.value.trim().toLowerCase();
+      const correctAnswer = riddles[current].a;
+
+      if (userAnswer === correctAnswer) {
+        resultEl.textContent = "✅ Correct!";
+        correct++;
+        current++;
+        setTimeout(loadRiddle, 1000);
+      } else {
+        chances--;
+        if (chances > 0) {
+          resultEl.textContent = `❌ Wrong! You have ${chances} chances left.`;
+        } else {
+          resultEl.textContent = `😢 Out of chances. Correct answer: ${correctAnswer}`;
+          current++;
+          setTimeout(loadRiddle, 2000);
+        }
+      }
+    }
+
+    function endGame() {
+      riddleEl.textContent = correct >= 7 ? `🎉 You won! ${correct}/10 correct! 💖` : `💔 You got ${correct}/10 correct. Try again!`;
+      inputEl.style.display = "none";
+      resultEl.innerHTML += `<br><br><button onclick='location.reload()'>Play Again</button>`;
+    }
+
+    loadRiddle();
+  </script>
+
+</body>
+</html>
