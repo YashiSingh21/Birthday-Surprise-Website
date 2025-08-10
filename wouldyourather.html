@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Would You Rather</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff0f5;
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 {
+      color: #e75480;
+      margin-bottom: 2rem;
+    }
+    .question-box {
+      background-color: #ffeef8;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 6px 12px rgba(255, 182, 193, 0.3);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .option {
+      margin-top: 1.5rem;
+      padding: 1rem 2rem;
+      background: #ffaad4;
+      border-radius: 15px;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+      border: none;
+      cursor: pointer;
+      display: block;
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      transition: transform 0.2s ease;
+    }
+    .option:hover {
+      transform: scale(1.05);
+      background-color: #f58bbb;
+    }
+    #next-btn {
+      margin-top: 2rem;
+      background: #fbb6ce;
+      padding: 0.7rem 1.5rem;
+      border: none;
+      border-radius: 15px;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    a.btn-back {
+      display: inline-block;
+      margin-top: 2rem;
+      background: #e75480;
+      color: white;
+      text-decoration: none;
+      padding: 0.7rem 1.2rem;
+      border-radius: 15px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🤔 Would You Rather...</h1>
+  <div class="question-box">
+    <div id="question">Loading...</div>
+    <button class="option" onclick="chooseOption('A')" id="optionA"></button>
+    <button class="option" onclick="chooseOption('B')" id="optionB"></button>
+    <button id="next-btn" onclick="nextQuestion()">Next Question ➡️</button>
+  </div>
+
+  <a href="index.html" class="btn-back">⬅️ Back to Home</a>
+
+  <script>
+    const questions = [
+      { a: "Give up chocolate forever", b: "Give up pizza forever" },
+      { a: "Travel to the past", b: "Travel to the future" },
+      { a: "Be able to fly", b: "Be invisible" },
+      { a: "Only whisper", b: "Only shout" },
+      { a: "Live on the beach", b: "Live in the mountains" },
+      { a: "Never use social media again", b: "Never watch movies again" },
+      { a: "Always be 10 minutes late", b: "Always be 20 minutes early" },
+      { a: "Only speak in emojis", b: "Only speak in rhymes" }
+    ];
+
+    let currentIndex = 0;
+
+    function showQuestion() {
+      const q = questions[currentIndex];
+      document.getElementById('question').innerText = 'Would you rather...';
+      document.getElementById('optionA').innerText = q.a;
+      document.getElementById('optionB').innerText = q.b;
+    }
+
+    function nextQuestion() {
+      currentIndex = (currentIndex + 1) % questions.length;
+      showQuestion();
+    }
+
+    function chooseOption(option) {
+      alert("You chose option " + option + "! 💖");
+    }
+
+    showQuestion();
+  </script>
+</body>
+</html>
