@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Catch the Heart</title>
+  <style>
+    body {
+      margin: 0;
+      background: #ffe6f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    h1 {
+      color: #e75480;
+      margin: 20px;
+    }
+
+    #game {
+      position: relative;
+      width: 100vw;
+      height: 70vh;
+      background: linear-gradient(to top, #fff0f5, #ffe6f0);
+      overflow: hidden;
+      border: 4px solid #ffb6c1;
+      border-radius: 20px;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 30px;
+      animation: fall 6s linear forwards;
+      cursor: pointer;
+    }
+
+    @keyframes fall {
+      from {
+        top: -50px;
+      }
+      to {
+        top: 90%;
+      }
+    }
+
+    #timer {
+      font-size: 1.2rem;
+      color: #e75480;
+      margin-bottom: 10px;
+    }
+
+    #final-score {
+      font-size: 2rem;
+      color: #d1005c;
+      margin: 20px;
+    }
+
+    .buttons {
+      margin-top: 10px;
+      display: flex;
+      gap: 15px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      background: #ffb6c1;
+      border: none;
+      border-radius: 10px;
+      color: #700020;
+      cursor: pointer;
+    }
+
+    #score {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>💖 Catch the Heart 💖</h1>
+  <div id="timer">Time: 30</div>
+  <div id="game"></div>
+  <div id="final-score"></div>
+
+  <div class="buttons">
+    <button onclick="resetGame()">Reset</button>
+    <button onclick="window.location.href='index.html'">Back to Home</button>
+  </div>
+
+  <script>
+    const game = document.getElementById('game');
+    const timerDisplay = document.getElementById('timer');
+    const finalScoreDisplay = document.getElementById('final-score');
+
+    let score = 0;
+    let gameInterval;
+    let heartInterval;
+    let timeLeft = 30;
+    let gameActive = false;
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 90 + '%';
+      heart.innerHTML = '❤️';
+
+      heart.addEventListener('click', () => {
+        if (!gameActive) return;
+        score++;
+        heart.remove();
+      });
+
+      game.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 6000);
+    }
+
+    function startGame() {
+      score = 0;
+      timeLeft = 30;
+      gameActive = true;
+      timerDisplay.textContent = `Time: ${timeLeft}`;
+      finalScoreDisplay.textContent = '';
+
+      heartInterval = setInterval(createHeart, 700);
+
+      gameInterval = setInterval(() => {
+        timeLeft--;
+        timerDisplay.textContent = `Time: ${timeLeft}`;
+        if (timeLeft <= 0) {
+          endGame();
+        }
+      }, 1000);
+    }
+
+    function endGame() {
+      clearInterval(heartInterval);
+      clearInterval(gameInterval);
+      gameActive = false;
+      finalScoreDisplay.textContent = `🏁 Final Score: ${score}`;
+    }
+
+    function resetGame() {
+      const hearts = document.querySelectorAll('.heart');
+      hearts.forEach(h => h.remove());
+      clearInterval(heartInterval);
+      clearInterval(gameInterval);
+      startGame();
+    }
+
+    // Start automatically on page load
+    startGame();
+  </script>
+</body>
+</html>
