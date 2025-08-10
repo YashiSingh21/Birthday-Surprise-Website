@@ -1,0 +1,248 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: #fff4f4;
+  color: #333;
+  line-height: 1.6;
+  padding: 20px;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #ff7aa2;
+  color: white;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.btn:hover {
+  background: #ff4f8b;
+}
+
+/* Welcome Section */
+.welcome-section {
+  text-align: center;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #ffe0ec, #ffd1f3);
+  border-radius: 16px;
+  margin-bottom: 40px;
+}
+
+.welcome-section h1 {
+  font-size: 2.5rem;
+  color: #d63384;
+  margin-bottom: 15px;
+}
+
+.welcome-section p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+/* Timeline Section */
+.timeline-section {
+  margin-bottom: 40px;
+}
+
+.timeline-section h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #c2185b;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 0 10px;
+}
+
+.timeline-item {
+  background: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(255, 105, 135, 0.2);
+  text-align: center;
+}
+
+.timeline-item img {
+  max-width: 100%;
+  border-radius: 12px;
+  margin-top: 10px;
+}
+
+/* Game Section */
+.game-section {
+  text-align: center;
+  padding: 40px 20px;
+  background: #ffeef8;
+  border-radius: 16px;
+}
+
+.game-section h2 {
+  font-size: 2rem;
+  color: #d63384;
+  margin-bottom: 15px;
+}
+
+.game-section input {
+  padding: 10px;
+  width: 80%;
+  max-width: 300px;
+  border: 2px solid #ff7aa2;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.game-section button {
+  background: #ff7aa2;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s;
+}
+
+.game-section button:hover {
+  background: #ff4f8b;
+}
+
+#result {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #5c0067;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .welcome-section h1 {
+    font-size: 1.8rem;
+  }
+
+  .timeline {
+    gap: 20px;
+  }
+
+  .game-section h2 {
+    font-size: 1.5rem;
+  }
+}
+/* Animations */
+@keyframes fadeSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Welcome Animation */
+.welcome-section {
+  animation: fadeSlideUp 1.5s ease forwards;
+  opacity: 0;
+  animation-delay: 0.2s;
+}
+
+/* Timeline Items Animation */
+.timeline-item {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.timeline-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Puzzle bounce */
+.shake {
+  animation: bounce 0.3s ease;
+}
+#hearts-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.special-animation-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.animation {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 200px; 
+  opacity: 0;
+  animation: pop-fade-large 2.5s ease-out forwards;
+}
+
+.animation.hug::before {
+  content: "🤗";
+}
+
+.animation.kiss::before {
+  content: "😘";
+}
+
+.animation.love::before {
+  content: "❤️";
+}
+
+@keyframes pop-fade-large {
+  0% {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0;
+  }
+  40% {
+    transform: translate(-50%, -50%) scale(1.4);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+}
+.game-btn {
+  background-color: #ffb6c1;
+  padding: 1rem 2rem;
+  border-radius: 15px;
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+.game-btn:hover {
+  transform: scale(1.05);
+}
