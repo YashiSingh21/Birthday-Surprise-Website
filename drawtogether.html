@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Draw Together</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff0f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      color: #e75480;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .draw-controls {
+      margin-bottom: 1rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .draw-controls > * {
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    canvas {
+      border: 3px dashed #ffb6c1;
+      border-radius: 20px;
+      background: white;
+      cursor: crosshair;
+    }
+
+    button {
+      background: #ffb6c1;
+      border: none;
+      color: #700020;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎨 Draw Together 💖</h1>
+  <div class="draw-controls">
+    <label>
+      Brush Color:
+      <input type="color" id="colorPicker" value="#e75480" />
+    </label>
+    <label>
+      Brush Size:
+      <input type="range" id="brushSize" min="1" max="20" value="5" />
+    </label>
+    <button onclick="undoLast()">Undo</button>
+    <button onclick="clearCanvas()">Clear</button>
+    <button onclick="saveDrawing()">Save</button>
+  </div>
+
+  <canvas id="canvas" width="600" height="400"></canvas>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const colorPicker = document.getElementById('colorPicker');
+    const brushSize = document.getElementById('brushSize');
+
+    let painting = false;
+    let paths = [];
+    let currentPath = [];
+
+    canvas.addEventListener('mousedown', startPosition);
+    canvas.addEventListener('mouseup', endPosition);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseleave', endPosition);
+
+    function startPosition(e) {
+      painting = true;
+      currentPath = [];
+      ctx.beginPath(); // Start a new path to prevent line connection
+      draw(e);
+    }
+
+    function endPosition() {
+      if (painting) {
+        paths.push([...currentPath]);
+      }
+      painting = false;
+      ctx.beginPath(); // Reset path after drawing ends
+    }
+
+    function draw(e) {
+      if (!painting) return;
+      const x = e.offsetX;
+      const y = e.offsetY;
+      const color = colorPicker.value;
+      const size = brushSize.value;
+
+      ctx.lineWidth = size;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = color;
+
+      ctx.lineTo(x, y);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+
+      currentPath.push({ x, y, color, size });
+    }
+
+    function clearCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      paths = [];
+      ctx.beginPath();
+    }
+
+    function undoLast() {
+      if (paths.length > 0) {
+        paths.pop();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        redrawAll();
+      }
+    }
+
+    function redrawAll() {
+      ctx.beginPath();
+      for (const path of paths) {
+        if (path.length === 0) continue;
+        ctx.beginPath();
+        for (let i = 0; i < path.length; i++) {
+          const { x, y, color, size } = path[i];
+          ctx.strokeStyle = color;
+          ctx.lineWidth = size;
+          ctx.lineCap = 'round';
+
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+          ctx.stroke();
+        }
+        ctx.beginPath(); // Start fresh for next stroke
+      }
+    }
+
+    function saveDrawing() {
+      const link = document.createElement('a');
+      link.download = 'my_drawing.png';
+      link.href = canvas.toDataURL();
+      link.click();
+    }
+  </script>
+</body>
+</html>
