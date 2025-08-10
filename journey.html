@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Love Story</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background: #fffafc;
+      font-family: 'Dancing Script', cursive;
+      overflow: hidden;
+    }
+
+    #story-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 2rem;
+      text-align: center;
+      font-size: 2.2rem;
+      background: #fff0f5;
+      color: #a83279;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .hidden {
+      opacity: 0;
+    }
+
+    .visible {
+      opacity: 1;
+    }
+
+    .heart {
+      position: fixed;
+      bottom: -20px;
+      width: 20px;
+      height: 20px;
+      background: pink;
+      opacity: 0.8;
+      transform: rotate(45deg);
+      animation: floatUp 6s linear infinite;
+      z-index: 1;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: pink;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      top: 0;
+      left: -10px;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-100vh) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    .action-buttons {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      gap: 1rem;
+      z-index: 999;
+    }
+
+    .action-buttons button {
+      background: #ffcce0;
+      color: #a83279;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<div id="story-container" class="visible">Loading our story...</div>
+
+<!-- Hearts falling -->
+<script>
+  for (let i = 0; i < 25; i++) {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.animationDelay = `${Math.random() * 5}s`;
+    heart.style.animationDuration = `${4 + Math.random() * 3}s`;
+    document.body.appendChild(heart);
+  }
+</script>
+
+<!-- Background Music -->
+<audio autoplay loop>
+  <source src="your-music.mp3" type="audio/mpeg">
+  Your browser does not support audio.
+</audio>
+
+<!-- Action Buttons -->
+<div class="action-buttons">
+  <button onclick="window.location.href='gallery.html'">View Photo Gallery 📸</button>
+  <button onclick="window.location.href='index.html'">Back to Chatbot 💬</button>
+</div>
+
+<!-- Story Script -->
+<script>
+  const slides = [
+    "As I saw him, I immediately fell for him and he became my crush 💕",
+    "People said he was rude...",
+    "Even so, I always talked to him nicely and he responded warmly...",
+    "One day, I saw his Instagram reel...",
+    "I messaged him 😂",
+    "From there, everything changed...",
+  ];
+
+  const container = document.getElementById("story-container");
+  let index = 0;
+
+  function showNextSlide() {
+    container.classList.remove("visible");
+    container.classList.add("hidden");
+    setTimeout(() => {
+      container.textContent = slides[index];
+      container.classList.remove("hidden");
+      container.classList.add("visible");
+      index++;
+      if (index < slides.length) {
+        setTimeout(showNextSlide, 4000);
+      }
+    }, 1000);
+  }
+
+  setTimeout(showNextSlide, 2000);
+</script>
+
+</body>
+</html>
